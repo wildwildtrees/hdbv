@@ -3,6 +3,8 @@ module Main where
 import Control.Exception
 import Control.Monad
 import GHC.IO.Exception 
+import qualified Data.Text as T
+import qualified Data.Text.IO as TIO
 import Text.Read
 import Text.Show.Pretty
 import qualified Data.Map as Map 
@@ -10,7 +12,7 @@ import System.Environment
 import System.Exit
 
 maybeReadFile :: FilePath -> IO (Maybe String)
-maybeReadFile filepath = catch (fmap Just . readFile $ filepath) (\e ->
+maybeReadFile filepath = catch (fmap Just . fmap T.unpack . TIO.readFile $ filepath) (\e ->
   case ioe_type e of
     NoSuchThing -> pure Nothing
     _ -> throw e 
@@ -56,7 +58,7 @@ dbvGet var hash = do
 
 dbvSet var value hash = do 
   let newHash = Map.insert var value hash 
-  writeFile filename . ppShow $ newHash 
+  TIO.writeFile filename . T.pack . ppShow $ newHash 
   exitSuccess 
 
 

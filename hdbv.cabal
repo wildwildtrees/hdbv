@@ -65,7 +65,8 @@ executable hdbv
   build-depends:       
     base,
     containers,
-    pretty-show 
+    pretty-show,
+    text  
                       
 
   -- Directories containing source files.

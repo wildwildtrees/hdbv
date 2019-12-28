@@ -1,1 +1,2 @@
-fromList [ ( "name" , "wildtrees" ) ]
+fromList
+  [ ( "email" , "wild@trees.com" ) , ( "name" , "wildtrees" ) ]
